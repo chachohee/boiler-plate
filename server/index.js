@@ -1,6 +1,6 @@
 const express = require("express"); //express 모듈을 가져온다
 const app = express(); //새로운 express app을 만들고
-const port = 3000; //3천번 포트를 백서버로 두고
+const port = 3998; //5천번 포트를 백서버로 두고
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { auth } = require("./middleware/auth");
@@ -91,6 +91,10 @@ app.get("/api/users/logout", auth, (req, res) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).send({ success: true });
   });
+});
+
+app.get("/api/hello", (req, res) => {
+  res.send("hi");
 });
 
 app.listen(port, () => {
