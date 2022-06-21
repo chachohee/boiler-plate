@@ -1,6 +1,6 @@
 const express = require("express"); //express 모듈을 가져온다
 const app = express(); //새로운 express app을 만들고
-const port = 3998; //5천번 포트를 백서버로 두고
+const port = 3998; //포트를 백서버로 두고
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { auth } = require("./middleware/auth");
@@ -17,7 +17,7 @@ app.use(cookieParser());
 const mongoose = require("mongoose");
 mongoose
   .connect(config.mongoURI, {
-    useNewUrlParser: true,
+    // useNewUrlParser: true,
     // useUnifinedToPoloy: true,
     // useCreateIndex: true,
     // useFindAndModify: false,
@@ -28,7 +28,7 @@ mongoose
 app.get("/", (req, res) => {
   res.send("여름아 가지마 ~~~ !!!");
 });
-app.post("api/users/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   //회원가입할 때 필요한 정보들을 client에서 가져오면
   //그것들을 DB에 넣어준다
 
@@ -41,7 +41,7 @@ app.post("api/users/register", (req, res) => {
   });
 });
 
-app.post("api/users/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   //요청된 이메일을 데이터베이스에 있는지 찾는다.
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
@@ -72,7 +72,7 @@ app.post("api/users/login", (req, res) => {
   });
 });
 
-app.get("api/users/auth", auth, (req, res) => {
+app.get("/api/users/auth", auth, (req, res) => {
   //여기까지 미들웨어를 통과해왔다는 얘기는 authentication이 true라는 말
   res.status(200).json({
     _id: req.user._id,
